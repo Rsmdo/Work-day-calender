@@ -1,10 +1,7 @@
-//declaring variables to target the Ids from index.html
-var current = $("#currentDay");
-//using moment.js to display the currentDay in m/d/y and time format
+
+const current = $("#currentDay");
 const currentDay = moment().format("MMMM Do YYYY, h:mm:ss a ");
-//converting hours into integer from string using parseInt
 const currentHour = parseInt(moment().hour());
-//display currentDay on the page
 current.text(currentDay);
 const blockLength = $(".time-block").length;
 
@@ -13,8 +10,6 @@ const blockLength = $(".time-block").length;
     renderLocalStorage();
 
         $(".description").each(function() {
-            //_i = input used to create the object, converting integer tostring 
-            // targeting description block to add colors
             let currentBlockTimeVal = parseInt(moment($(this).attr("id"))._i);
             if (moment(currentBlockTimeVal).isBefore(currentHour)) {
                 $(this).addClass("past");
@@ -29,7 +24,7 @@ const blockLength = $(".time-block").length;
 
         $(".saveBtn").on("click", function() {
             for(let i = 0; i < blockLength; i++) {
-                let currentID = $(".description").eq(i).attr("id");
+                let currentID = $(".description").eq(i).attr("id"); // selecting specific element with index number and id
                 let value = $(".description").eq(i).val().trim();
                 localStorage.setItem(currentID, value);
             }
