@@ -1,44 +1,51 @@
 
-const current = $("#currentDay");
-const currentDay = moment().format("MMMM Do YYYY, h:mm:ss a ");
-const currentHour = parseInt(moment().hour());
-current.text(currentDay);
+const currentDay = $("#currentDay");
+const date = moment().format("MMMM Do YYYY, h:mm:ss a ");
+const hour = parseInt(moment().hour());
 const blockLength = $(".time-block").length;
-
-
-
-    renderLocalStorage();
-
-        $(".description").each(function() {
-            let currentBlockTimeVal = parseInt(moment($(this).attr("id"))._i);
-            if (moment(currentBlockTimeVal).isBefore(currentHour)) {
-                $(this).addClass("past");
-            }
-            else if (moment(currentBlockTimeVal).isSame(currentHour)) {
-                $(this).addClass("present");
-            }
-            else if (moment(currentBlockTimeVal).isAfter(currentHour)) {
-                $(this).addClass("future");
-            }
-        });
-
-        $(".saveBtn").on("click", function() {
-            for(let i = 0; i < blockLength; i++) {
-                let currentID = $(".description").eq(i).attr("id"); // selecting specific element with index number and id
-                let value = $(".description").eq(i).val().trim();
-                localStorage.setItem(currentID, value);
-            }
-        });
-
-
-        function renderLocalStorage() {
-            for (let i = 9, j = 0; i < 18; i++, j++) {
-                let blockInfo = (localStorage.getItem(i))
-                $(".description").eq(j).text(blockInfo)
-            }
-        }
-
 const rows = document.getElementsByClassName("row");
+
+
+currentDay.text(date);
+
+
+function settingStorage() {
+  for (let i = 9, j = 0; i < 18; i++, j++) {
+    let blockInfo = (localStorage.getItem(i))
+    $(".description").eq(j).text(blockInfo)
+  }
+}
+
+settingStorage();
+
+$(".description").each(function() {
+  let currentBlockTimeVal = parseInt(moment($(this).attr("id"))._i);
+    if (moment(currentBlockTimeVal).isBefore(hour)) {
+        $(this).addClass("past");
+      }
+    else if (moment(currentBlockTimeVal).isSame(hour)) {
+        $(this).addClass("present");
+      }
+    else if (moment(currentBlockTimeVal).isAfter(hour)) {
+      $(this).addClass("future");
+    }
+});
+$(".saveBtn").on("click", function() {
+  for(let i = 0; i < blockLength; i++) {
+    let currentID = $(".description").eq(i).attr("id"); // selecting specific element with index number and id
+    let value = $(".description").eq(i).val().trim();
+        localStorage.setItem(currentID, value);
+      }
+});
+
+
+function renderLocalStorage() {
+  for (let i = 9, j = 0; i < 18; i++, j++) {
+    let blockInfo = (localStorage.getItem(i))
+    $(".description").eq(j).text(blockInfo)
+  }
+}
+
 
 Array.from(rows).forEach(row => {
   let
@@ -49,11 +56,11 @@ Array.from(rows).forEach(row => {
   }
   if (rowHour) {
     // Compares row id to current hour and sets color accordingly
-    if (currentHour === rowHour) {
+    if (hour === rowHour) {
       setColor(row, "red");
-    } else if ((currentHour < rowHour) && (currentHour > rowHour - 6)) {
+    } else if ((hour < rowHour) && (hour > rowHour - 6)) {
       setColor(row, "green");
-    } else if ((currentHour > rowHour) && (currentHour < rowHour + 6)) {
+    } else if ((hour > rowHour) && (hour < rowHour + 6)) {
       setColor(row, "lightgrey");
     } else {
       setColor(row, "white");
@@ -67,7 +74,7 @@ function setColor(element, color) {
 var timeChange = function(){
   //jumbotron time
   const timeNow = moment().format("dddd, MMM Do, YYYY, hh:mm:ss a");
-  current.text(timeNow);
+  currentDay.text(timeNow);
 }
 
 setInterval(timeChange, 1000);
