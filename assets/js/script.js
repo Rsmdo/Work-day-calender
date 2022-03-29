@@ -39,34 +39,6 @@ $(".saveBtn").on("click", function() {
 });
 
 
-function renderLocalStorage() {
-  for (let i = 9, j = 0; i < 18; i++, j++) {
-    let blockInfo = (localStorage.getItem(i))
-    $(".description").eq(j).text(blockInfo)
-  }
-}
-
-
-Array.from(rows).forEach(row => {
-  let
-    rowIdString = row.id,
-    rowHour;
-  if (rowIdString) {
-    rowHour = parseInt(rowIdString);
-  }
-  if (rowHour) {
-    // Compares row id to current hour and sets color accordingly
-    if (hour === rowHour) {
-      setColor(row, "red");
-    } else if ((hour < rowHour) && (hour > rowHour - 6)) {
-      setColor(row, "green");
-    } else if ((hour > rowHour) && (hour < rowHour + 6)) {
-      setColor(row, "lightgrey");
-    } else {
-      setColor(row, "white");
-    }
-  }
-});
 
 function setColor(element, color) {
   element.style.backgroundColor = color;
